@@ -1,0 +1,15 @@
+/** tag selectors **/
+body{
+    background-color: #EEEDDE;
+}
+
+/** class selectors **/
+.main{
+    padding: 10% 20%;
+    font-size: larger;
+}
+
+/** id selectors **/
+#pdficon{
+    color: #141E27;
+}
