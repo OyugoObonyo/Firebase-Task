@@ -31,6 +31,7 @@ def index():
     url route for index page
     """
     files = storage.list_files()
+    # get names of all files available in storage 
     file_names = [(storage.child(file.name).get_url(None))[77:-10] for file in files]
     return render_template('index.html', file_names=file_names)
 
@@ -51,7 +52,7 @@ def upload_file():
         storage.child(f.filename).put(temp.name)
         # Clean-up temp file
         os.remove(temp.name)
-        flash("File was successfully uploaded")
+        flash("File was successfully uploaded", "success")
         return redirect(url_for('index'))
     return render_template('upload.html', form=form)
 
@@ -67,4 +68,4 @@ def download_file(filename):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
