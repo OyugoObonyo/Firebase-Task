@@ -6,6 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 import tempfile
 
+
 app = Flask(__name__)
 load_dotenv('.env')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -17,7 +18,8 @@ firebaseConfig = {
   "messagingSenderId": "59877063629",
   "appId": "1:59877063629:web:e7840f23a8f0f805402284",
   "measurementId": "G-6CRW0DT9V7",
-  "databaseURL": ""
+  "databaseURL": "",
+  "serviceAccount": "file-uploads-e52cd-firebase-adminsdk-43rlq-c5138d85db.json"
 }
 firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage()
@@ -55,9 +57,9 @@ def all_files():
     """
     route that serves up all file names from our firebase storage
     """
-    files = storage.child().order_by_child("name").get()
-    return render_template('all.html', files=files)
-
+    files = storage.list_files()
+    file_names = [(storage.child(file.name).get_url(None))[77:-10] for file in files]
+    return render_template('all.html', file_names=file_names)
 
 
 if __name__ == "__main__":
