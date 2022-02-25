@@ -10,10 +10,3 @@ class UploadForm(FlaskForm):
     """
     file = FileField('File', validators=[DataRequired(), FileAllowed(['pdf'])])
     submit = SubmitField('Upload file')
-
-
-class DownloadForm(FlaskForm):
-    """
-    Form handling download file route
-    """
-    pass
