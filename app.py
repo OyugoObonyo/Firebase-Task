@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, flash, url_for
 import pyrebase
 from forms import DownloadForm, UploadForm
 from dotenv import load_dotenv
 import os
+from werkzeug.utils import secure_filename
+import tempfile
 
 app = Flask(__name__)
 load_dotenv('.env')
@@ -35,8 +37,27 @@ def upload_file():
     route handling file uploads
     """
     form = UploadForm()
-    # if form.validate_on_submit():
+    if form.validate_on_submit():
+        f = form.file.data
+        f.filename = secure_filename(f.filename)
+        temp = tempfile.NamedTemporaryFile(delete=False)
+        f.save(temp.name)
+        storage.child(f.filename).put(temp.name)
+        # Clean-up temp image
+        os.remove(temp.name)
+        flash("File was successfully uploaded")
+        return redirect(url_for('index'))
     return render_template('upload.html', form=form)
+
+
+@app.route('/files')
+def all_files():
+    """
+    route that serves up all file names from our firebase storage
+    """
+    files = storage.child().order_by_child("name").get()
+    return render_template('all.html', files=files)
+
 
 
 if __name__ == "__main__":
