@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, flash, url_for
 import pyrebase
-from forms import DownloadForm, UploadForm
+from forms import UploadForm
 from dotenv import load_dotenv
 import os
 from werkzeug.utils import secure_filename
@@ -30,7 +30,9 @@ def index():
     """
     url route for index page
     """
-    return render_template('index.html')
+    files = storage.list_files()
+    file_names = [(storage.child(file.name).get_url(None))[77:-10] for file in files]
+    return render_template('index.html', file_names=file_names)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -41,25 +43,27 @@ def upload_file():
     form = UploadForm()
     if form.validate_on_submit():
         f = form.file.data
+        # Ensure filename doesn't have inappropriate characters such as /
         f.filename = secure_filename(f.filename)
+        # Save file temporarily in our file system
         temp = tempfile.NamedTemporaryFile(delete=False)
         f.save(temp.name)
         storage.child(f.filename).put(temp.name)
-        # Clean-up temp image
+        # Clean-up temp file
         os.remove(temp.name)
         flash("File was successfully uploaded")
         return redirect(url_for('index'))
     return render_template('upload.html', form=form)
 
 
-@app.route('/files')
-def all_files():
+@app.route('/download/<filename>')
+def download_file(filename):
     """
-    route that serves up all file names from our firebase storage
+    download_file: downloads a file from firebase storage
+    @filename -Name of file we want to download
     """
-    files = storage.list_files()
-    file_names = [(storage.child(file.name).get_url(None))[77:-10] for file in files]
-    return render_template('all.html', file_names=file_names)
+    url = storage.child(filename).get_url(None)
+    return redirect(url)
 
 
 if __name__ == "__main__":
