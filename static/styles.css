@@ -8,14 +8,21 @@ body{
     margin: auto;
     text-align: center;
 }
-  
-
-.main{
+.upload {
+    margin-top: 10%;
+    text-align: center;
     padding: 10% 20%;
+
+}
+.main{
+    padding: 5% 10%;
     font-size: larger;
 }
 
 /** id selectors **/
 #pdficon{
     color: #141E27;
+}
+#download{
+    color: red;
 }

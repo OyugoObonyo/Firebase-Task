@@ -3,9 +3,17 @@
 {% block content %}
 <div class="container">
   <div class="main">
-    <i class="fa-solid fa-file-pdf fa-8x" id="pdficon"></i><br/><br/>
-    <a class="btn btn-outline-dark" href="{{ url_for('upload_file') }}" role="button" target="_blank">Upload</a><br/><br/>
-    <a class="btn btn-outline-dark" href="#" role="button" target="_blank">Download</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('upload_file') }}" role="button">Upload</a><br/><br/>
   </div>
+  <table class="table table-sm">
+    <tbody>
+        {% for name in file_names %}
+        <tr>
+            <td><i class="fa-solid fa-file-pdf" id="pdficon"></i> {{ name }}</td>
+            <td><a href="{{ url_for('download_file', filename=name) }}" class="btn btn-sm btn-dark">Download</i></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 </div>
 {% endblock %}
