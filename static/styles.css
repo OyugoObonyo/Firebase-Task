@@ -4,10 +4,6 @@ body{
 }
 
 /** class selectors **/
-.container {
-    margin: auto;
-    text-align: center;
-}
 .upload {
     margin-top: 10%;
     text-align: center;
