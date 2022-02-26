@@ -9,6 +9,8 @@ import tempfile
 
 app = Flask(__name__)
 load_dotenv('.env')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
 
 firebaseConfig = {
   "apiKey": "AIzaSyAgOVNgtr2mWRYRRxupHm0dXI5Pb0BwRjA",
