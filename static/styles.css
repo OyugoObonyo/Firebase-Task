@@ -1,6 +1,7 @@
 /** tag selectors **/
 body{
     background-color: #EEEDDE;
+    font-family: 'Roboto Serif', sans-serif;
 }
 
 /** class selectors **/
@@ -13,6 +14,9 @@ body{
 .main{
     padding: 5% 10%;
     font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /** id selectors **/
