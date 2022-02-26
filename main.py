@@ -19,7 +19,7 @@ firebaseConfig = {
   "appId": "1:59877063629:web:e7840f23a8f0f805402284",
   "measurementId": "G-6CRW0DT9V7",
   "databaseURL": "",
-  "serviceAccount": "file-uploads-e52cd-firebase-adminsdk-43rlq-c5138d85db.json"
+  "serviceAccount": os.environ.get('CRED')
 }
 firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage()
@@ -68,4 +68,4 @@ def download_file(filename):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
