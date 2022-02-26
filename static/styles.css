@@ -1,5 +1,5 @@
 /** tag selectors **/
-body{
+body {
     background-color: #EEEDDE;
     font-family: 'Roboto Serif', sans-serif;
 }
@@ -11,10 +11,15 @@ body{
     padding: 10% 20%;
 
 }
-.main{
+.main {
     padding: 5% 10%;
     font-size: larger;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/** id selectors **/
+#pdf {
+    margin-bottom: 10px;
 }
