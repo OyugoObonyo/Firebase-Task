@@ -18,11 +18,3 @@ body{
     align-items: center;
     justify-content: center;
 }
-
-/** id selectors **/
-#pdficon{
-    color: #141E27;
-}
-#download{
-    color: red;
-}
